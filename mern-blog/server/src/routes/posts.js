@@ -61,7 +61,7 @@ router.post('/',auth, async(req,res)=>{
        res.status(201).json(post);
 });
 
-router.put('/:id',auth, upload.single('featureImage'),async(req,res)=>{
+router.put('/:id',auth,async(req,res)=>{
     const {error,value}=postSchema.validate(req.body);
 
     if(error){
