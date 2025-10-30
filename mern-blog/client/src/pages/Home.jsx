@@ -24,7 +24,7 @@ console.log('Posts:',posts['items']);
         <div className='grid gap-4 md:grid-cols-2 lg:grid-cols-3'>
 { posts['items'].map((post)=>(
     <div key={post._id} className='bg-white shadow- p-4 rounded'>
-        <h2 className='text-xl font-semibold'>{post.title}</h2>
+        <h2 className=' text-gray-600 text-xl font-semibold'>{post.title}</h2>
         <p className='text-gray-600 text-sm'>{post.category?.name}</p>
         <p className='text-gray-700'>{post.content.slice(0,100)}...</p>
         <Link to={`/posts/${post._id}`}  className='text-blue-500 mt-2 inline-block'> Read more</Link>
