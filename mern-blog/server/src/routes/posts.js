@@ -24,13 +24,15 @@ router.get('/',async(req,res)=>{
         filter.category=req.query.category;
     }
 
-    const [items,total]=await Promise.all([
-        (await Post.find(filter).populate('category')).sort({
-            createdAt:-1
-        }).skip(skip).limit(limit),
-        Post.countDocuments(filter)
-    ]);
-    res.status({items,total,page:Math.ceil(total/limit)})
+   const [items, total] = await Promise.all([
+  Post.find(filter)
+    .populate('category')
+    .sort({ createdAt: -1 })
+    .skip(skip)
+    .limit(limit),
+  Post.countDocuments(filter)
+]);
+    res.json({items,total,page:Math.ceil(total/limit)})
 });
 
 router.get('/:id',async(req,res)=>{
@@ -44,7 +46,7 @@ if(!post){
  res.json(post);
 });
 
-router.post('/',auth,upload.single('featureImage'), async(req,res)=>{
+router.post('/',auth, async(req,res)=>{
     const body={...req.body};
     const {error,value}=postSchema.validate(body);
 
@@ -53,11 +55,7 @@ router.post('/',auth,upload.single('featureImage'), async(req,res)=>{
             error:error.details[0].message
         });
     }
-    if(req.file){
-        value.featureImage=`/${req.file.path.replace(/\\/g, '/')}`;
 
-
-    }
        value.author=req.user.id;
        const post=await Post.create(value);
        res.status(201).json(post);
