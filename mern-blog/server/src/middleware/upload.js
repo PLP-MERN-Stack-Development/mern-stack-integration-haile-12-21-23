@@ -15,7 +15,7 @@ const storage=multer.diskStorage({
         cb(null,`${Date.now()}-${Math.round(Math.random()*1e9)}${ext}`);
     }
 });
-const upload=multer=({
+const upload=multer({
     storage,limits:{
         fileSize:5*1024*1024
     }

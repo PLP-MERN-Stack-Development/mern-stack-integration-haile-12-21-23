@@ -7,7 +7,7 @@ const postSchema=new mongoose.Schema({
     featuredImage:{type:String},
     category:{type:mongoose.Schema.Types.ObjectId, ref:'Category'},
 author:{type:mongoose.Schema.Types.ObjectId, ref:'User'},
-tags:[Strings],
+tags:[String],
 createdAt:{type:Date,default: Date.now()}
 });
 module.exports=mongoose.model('Post',postSchema);

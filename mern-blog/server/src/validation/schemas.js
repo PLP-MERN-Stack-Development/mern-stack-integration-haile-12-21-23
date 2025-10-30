@@ -1,7 +1,7 @@
 const Joi=require('joi');
 const postSchema=Joi.object({
-    title:Joi.string().mim(3).max(200).required(),
-    content:Joi.string().mim(10).required(),
+    title:Joi.string().min(3).max(200).required(),
+    content:Joi.string().min(10).required(),
     excerpt:Joi.string().max(500).optional().allow(''),
     category:Joi.string().optional().allow(''),
     tags:Joi.array().items(Joi.string()).optional(),
