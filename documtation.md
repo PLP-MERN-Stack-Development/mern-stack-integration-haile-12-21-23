@@ -147,5 +147,3 @@ Frontend should now be available at `http://localhost:5173` (or the port Vite sh
 ![1762032266021](image/documtation/1762032266021.png)
 
 ---
-
-## ✅ Submission Notes
