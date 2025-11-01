@@ -61,25 +61,33 @@ router.post('/',auth, async(req,res)=>{
        res.status(201).json(post);
 });
 
-router.put('/:id',auth,async(req,res)=>{
-    const {error,value}=postSchema.validate(req.body);
+router.put('/:id', auth, async (req, res) => {
+  // validate input
+  const { error, value } = postSchema.validate(req.body);
+  if (error) {
+    return res.status(400).json({ error: error.details[0].message });
+  }
 
-    if(error){
-        return res.status(400).json({
-            error:error.details[0].message
-        });
+  // handle uploaded file
+  if (req.file) {
+    value.featuredImage = `/${req.file.path.replace(/\\/g, '/')}`;
+  }
+
+  // update post
+  try {
+    const updated = await Post.findByIdAndUpdate(req.params.id, value, { new: true });
+
+    if (!updated) {
+      return res.status(404).json({ error: 'Not found' });
     }
-    if(req.file){
-        value.featureImage=`/${req.file.path.replace(/\\/g,'/')}`}
-        const updated=await Post.findById(req.params.id,value, {new:true});
-        if (!updated) {
-            return res.status(404).json({
-                error: 'Not found'
-            });
-        }
-        res.json(updated);
 
+    res.json(updated);
+  } catch (err) {
+    console.error(err);
+    res.status(500).json({ error: 'Server error' });
+  }
 });
+
 router.delete('/:id',auth, async(req,res)=>{
     const deleted= await Post.findById(req.params.id);
     if(!deleted){

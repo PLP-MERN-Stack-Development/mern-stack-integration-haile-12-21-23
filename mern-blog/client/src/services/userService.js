@@ -1,5 +1,9 @@
 import api from './api';
 
-export const register=()=>api.post(`/auth/register`);
-export const login=()=>api.post(`/auth/login`);
-export const getProfile=()=>api.get('/auth/profile');
+export const registerUser=(data)=>api.post(`/auth/register`,data);
+export const login=(data)=>api.post(`/auth/login`,data);
+export const getProfile=(token)=>api.get('/auth/profile',{
+    headers:{
+        Authorization:`Bear ${token}`
+    }
+});
